@@ -1,0 +1,11 @@
+[Unit]
+Description=Move the hostname with the Domain to the salt minion_id.
+DefaultDependencies=no
+After=basic.target
+
+[Service]
+Type=oneshot
+ExecStart=/bin/bash -c 'echo "$(hostname)" > /etc/salt/minion_id'
+
+[Install]
+WantedBy=multi-user.target
