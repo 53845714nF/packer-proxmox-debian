@@ -10,6 +10,8 @@ autoinstall:
     disable_root: true
     ssh_quiet_keygen: true
     allow_public_ssh_keys: true
+  apt:
+    preserve_sources_list: false
   packages:
     - qemu-guest-agent
     - sudo
@@ -27,4 +29,10 @@ autoinstall:
         lock-passwd: false
         sudo: ALL=(ALL) NOPASSWD:ALL
         shell: /bin/bash
-         passwd: packer
+        passwd: packer
+  salt_minion:
+      pkg_name: salt-minion
+      service_name: salt-minion
+      config_dir: /etc/salt
+      conf:
+          master: salt

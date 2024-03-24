@@ -115,22 +115,4 @@ build {
     provisioner "shell" {
         inline = [ "sudo cp /tmp/99-pve.cfg /etc/cloud/cloud.cfg.d/99-pve.cfg" ]
     }
-
-    # Unit File for Salt Minion
-    provisioner "file" {
-        source = "debian12/files/minion_id.service"
-        destination = "/etc/systemd/system/minion_id.service"
-    }
-
-    # Install Salt Minion
-    provisioner "shell" {
-        inline = [
-            "systemctl enable minion_id",
-            "sudo curl -fsSL -o /etc/apt/keyrings/salt-archive-keyring-2023.gpg https://repo.saltproject.io/salt/py3/debian/11/amd64/SALT-PROJECT-GPG-PUBKEY-2023.gpg",
-            "echo 'deb [signed-by=/etc/apt/keyrings/salt-archive-keyring-2023.gpg arch=amd64] https://repo.saltproject.io/salt/py3/debian/11/amd64/latest bullseye main' | sudo tee /etc/apt/sources.list.d/salt.list",
-            "sed -i 's/deb cdrom/#deb cdrom/' /etc/apt/sources.list",
-            "sudo apt -y update",
-            "sudo apt -y install salt-minion"
-        ]
-    }
 }

@@ -1,10 +1,11 @@
 # Debian Packer Builder for Proxmox
 
-Thanks to Dustin Rue how build similar for [CentOS/Rocky/Ubuntu](https://github.com/dustinrue/proxmox-packer).
+This project provides Packer files to build a basic image of Debian for use on a Proxmox system.
+Use it as is or as a starting point for a more fully customized image. 
+This project installs the base system and include salt-minion.
+If you dont want to use salt-minion you can remove the `salt-minion` package from the `cloud-init` file.
 
-This project provides Packer files to build a basic image of Debian for use on a Proxmox system. Use it as is or as a starting point for a more fully customized image.
-
-This has been tested on Proxmox 8.0.3
+This has been tested on Proxmox 8.1.3
 
 ## Getting started
 
@@ -39,3 +40,7 @@ You can build the following templates by running `make`.
 ## After the image is built
 
 Once the image is built you will want to adjust any remaining settings in the template including creating a cloud-init drive. A cloud-init drive _must_ be created for you to ssh into any new VMs you create. For details on how to do so visit [https://blog.dustinrue.com/proxmox-cloud-init/](https://blog.dustinrue.com/proxmox-cloud-init/).
+
+## Acknowledgement
+
+Thanks to Dustin Rue how build similar for [CentOS/Rocky/Ubuntu](https://github.com/dustinrue/proxmox-packer).
