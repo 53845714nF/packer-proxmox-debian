@@ -4,6 +4,8 @@ This project provides Packer files to build a basic image of Debian for use on a
 Use it as is or as a starting point for a more fully customized image. 
 This project installs the base system and include salt-minion.
 If you dont want to use salt-minion you can remove the `salt-minion` package from the `cloud-init` file.
+Modify the `root` password in the `cloud-init`, the default password value is `packer`.
+Keep in mind that you can also set the `cloud-init` data via Terraform when you create a new VM from the template.
 
 This has been tested on Proxmox 8.1.3
 
