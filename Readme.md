@@ -7,7 +7,7 @@ If you dont want to use salt-minion you can remove the `salt-minion` package fro
 Modify the `root` password in the `cloud-init`, the default password value is `packer`.
 Keep in mind that you can also set the `cloud-init` data via Terraform when you create a new VM from the template.
 
-This has been tested on Proxmox 8.1.3
+This has been tested on Proxmox 8.2.7
 
 ## Getting started
 
@@ -16,7 +16,7 @@ To use this you will need:
 * ISO files for the OS you want to build an image for uploaded to Proxmox:
   * [Debian ISO](https://cdimage.debian.org/debian-cd/current/amd64/iso-dvd/)
 * A working [Proxmox](https://www.proxmox.com/en/) system
-* [Packer](https://packer.io). This project is tested with Packer version 1.9.2
+* [Packer](https://packer.io). This project is tested with Packer version 1.11.2
 
 **The OS ISO file will need to be uploaded to your Proxmox system.**
 

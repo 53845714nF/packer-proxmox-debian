@@ -1,4 +1,4 @@
-#cloud-config
+#cloud-init
 autoinstall:
   version: 1
   locale: de_DE

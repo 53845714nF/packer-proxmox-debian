@@ -28,7 +28,7 @@ variable "proxmox_iso_pool" {
 
 variable "debian_image" {
   type    = string
-  default = "debian-12.5.0-amd64-DVD-1.iso"
+  default = "debian-12.7.0-amd64-DVD-1.iso"
 }
 
 variable "vm_id" {
@@ -48,17 +48,19 @@ source "proxmox-iso" "debian12" {
     vm_id = "${var.vm_id}"
     vm_name = "debian12-template"
     template_description = "Debian 12 Server Image"
-    
-    iso_file = "${var.proxmox_iso_pool}/${var.debian_image}"
-    unmount_iso = true
-    
+
+    boot_iso {
+        iso_file = "${var.proxmox_iso_pool}/${var.debian_image}"
+        unmount = true
+    }
+
     qemu_agent = true
     scsi_controller = "virtio-scsi-pci"
 
     disks {
         disk_size = "16G"
+        format = "raw"
         storage_pool = "${var.proxmox_storage_pool}"
-        storage_pool_type = "lvm"
         type = "virtio"
     }
 
