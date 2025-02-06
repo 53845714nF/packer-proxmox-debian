@@ -15,9 +15,9 @@ Steps to reproduce the behavior:
 
 
 **Versions (please complete the following information):**
- - Proxmox Virtual Environment: [e.g. 8.1]
- - Packer: [e.g. v1.10.1]
- - Debian [e.g. 12]
+ - Proxmox Virtual Environment: [e.g. 8.3.3]
+ - Packer: [e.g. v1.12.0]
+ - Debian [e.g. 12.9]
  - If you change, the Proxmox Plugin
 
 **Additional context**

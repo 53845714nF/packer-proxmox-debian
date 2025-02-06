@@ -16,7 +16,7 @@ To use this you will need:
 * ISO files for the OS you want to build an image for uploaded to Proxmox:
   * [Debian ISO](https://cdimage.debian.org/debian-cd/current/amd64/iso-dvd/)
 * A working [Proxmox](https://www.proxmox.com/en/) system
-* [Packer](https://packer.io). This project is tested with Packer version 1.11.2
+* [Packer](https://packer.io). This project is tested with Packer version 1.12.0
 
 **The OS ISO file will need to be uploaded to your Proxmox system.**
 
