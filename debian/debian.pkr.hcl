@@ -28,7 +28,7 @@ variable "proxmox_iso_pool" {
 
 variable "debian_image" {
   type    = string
-  default = "debian-12.9.0-amd64-DVD-1.iso"
+  default = "debian-13.1.0-amd64-DVD-1.iso"
 }
 
 variable "vm_id" {
@@ -36,26 +36,38 @@ variable "vm_id" {
   default = ""
 }
 
-source "proxmox-iso" "debian12" {
+source "proxmox-iso" "debian" {
+    
     # Proxmox Settings
-    proxmox_url = "${var.proxmox_url}"
-    node = "${var.node}"
-    username = "${var.username}"
-    token = "${var.token}" 
+    proxmox_url              = "${var.proxmox_url}"
+    node                     = "${var.node}"
+    username                 = "${var.username}"
+    token                    = "${var.token}" 
     insecure_skip_tls_verify = true
 
     # VM General Settings
-    vm_id = "${var.vm_id}"
-    vm_name = "debian12-template"
-    template_description = "Debian 12 Server Image"
+    vm_id                = "${var.vm_id}"
+    vm_name              = "debian-template"
+    template_description = "Debian 13 Server Image"
+    os                   = "l26"
+    machine              = "q35"
+    cores                = "4"
+    memory               = "2048"
+    bios                 = "ovmf"
+    qemu_agent           = true
+    scsi_controller      = "virtio-scsi-pci"
+    
+    efi_config {
+        efi_storage_pool  = "${var.proxmox_storage_pool}"
+        pre_enrolled_keys = true
+        efi_format        = "raw"
+        efi_type          = "4m"
+    }
 
     boot_iso {
         iso_file = "${var.proxmox_iso_pool}/${var.debian_image}"
-        unmount = true
+        unmount  = true
     }
-
-    qemu_agent = true
-    scsi_controller = "virtio-scsi-pci"
 
     disks {
         disk_size = "16G"
@@ -64,9 +76,6 @@ source "proxmox-iso" "debian12" {
         type = "virtio"
     }
 
-    cores = "4"
-    memory = "2048" 
-
     network_adapters {
         bridge = "vmbr0"
         model  = "virtio"
@@ -74,16 +83,20 @@ source "proxmox-iso" "debian12" {
     } 
 
     # VM Cloud-Init Settings
-    cloud_init = true
+    cloud_init              = true
     cloud_init_storage_pool = "${var.proxmox_storage_pool}"
 
     # PACKER Boot Commands
-    boot_command = ["<esc><wait>auto url=http://{{ .HTTPIP }}:{{ .HTTPPort }}/ks.cfg<enter>"]
-    boot = "c"
-    boot_wait = "10s"
+    boot_command = [
+        "c<wait>",
+        "linux /install.amd/vmlinuz auto-install/enable=true priority=critical ",
+        "DEBIAN_FRONTEND=text preseed/url=http://{{ .HTTPIP }}:{{ .HTTPPort }}/ks.cfg noprompt<enter>",
+        "initrd /install.amd/initrd.gz<enter>",
+        "boot<enter>"
+    ]
 
     # PACKER Autoinstall Settings
-    http_directory = "debian12/http" 
+    http_directory = "debian/http" 
 
     ssh_username = "root"
     ssh_password = "packer"
@@ -91,7 +104,7 @@ source "proxmox-iso" "debian12" {
 }
 
 build {
-    sources = ["source.proxmox-iso.debian12"]
+    sources = ["source.proxmox-iso.debian"]
 
     # Provisioning the VM Template for Cloud-Init Integration in Proxmox #1
     provisioner "shell" {
@@ -109,12 +122,21 @@ build {
 
     # Provisioning the VM Template for Cloud-Init Integration in Proxmox #2
     provisioner "file" {
-        source = "debian12/files/99-pve.cfg"
+        source = "debian/files/99-pve.cfg"
         destination = "/tmp/99-pve.cfg"
     }
 
     # Provisioning the VM Template for Cloud-Init Integration in Proxmox #3
     provisioner "shell" {
         inline = [ "sudo cp /tmp/99-pve.cfg /etc/cloud/cloud.cfg.d/99-pve.cfg" ]
+    }
+
+    provisioner "shell" {
+        inline = [ "sed -i '/cdrom/d' /etc/apt/sources.list" ]
+    }
+    
+    provisioner "file" {
+        source = "debian/files/debian.sources"
+        destination = "/etc/apt/sources.list.d/debian.sources"
     }
 }
