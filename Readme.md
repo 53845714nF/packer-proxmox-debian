@@ -7,7 +7,7 @@ If you dont want to use salt-minion you can remove the `salt-minion` package fro
 Modify the `root` password in the `cloud-init`, the default password value is `packer`.
 Keep in mind that you can also set the `cloud-init` data via Terraform when you create a new VM from the template.
 
-This has been tested on Proxmox 9.0.10
+This has been tested on Proxmox 9.1.2
 
 ## Getting started
 
@@ -41,6 +41,9 @@ You can build the following templates by running `make`.
 * `node` - Name of your node as string
 * `proxmox_storage_pool` - Name of the Pool as string
 * `vm_id` - The Id of the VM as string
+
+> [!NOTE]  
+> When creating a Proxmox API Token, set Privilege Separation to No.
 
 ## After the image is built
 
