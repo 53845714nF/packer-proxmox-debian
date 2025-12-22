@@ -28,7 +28,7 @@ variable "proxmox_iso_pool" {
 
 variable "debian_image" {
   type    = string
-  default = "debian-13.1.0-amd64-DVD-1.iso"
+  default = "debian-13.2.0-amd64-DVD-1.iso"
 }
 
 variable "vm_id" {
@@ -88,7 +88,7 @@ source "proxmox-iso" "debian" {
 
     # PACKER Boot Commands
     boot_command = [
-        "c<wait>",
+        "<wait3>c<wait3>",
         "linux /install.amd/vmlinuz auto-install/enable=true priority=critical ",
         "DEBIAN_FRONTEND=text preseed/url=http://{{ .HTTPIP }}:{{ .HTTPPort }}/ks.cfg noprompt<enter>",
         "initrd /install.amd/initrd.gz<enter>",
