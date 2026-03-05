@@ -28,7 +28,7 @@ variable "proxmox_iso_pool" {
 
 variable "debian_image" {
   type    = string
-  default = "debian-13.2.0-amd64-DVD-1.iso"
+  default = "debian-13.3.0-amd64-DVD-1.iso"
 }
 
 variable "vm_id" {

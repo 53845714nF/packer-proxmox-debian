@@ -7,7 +7,7 @@ If you dont want to use salt-minion you can remove the `salt-minion` package fro
 Modify the `root` password in the `cloud-init`, the default password value is `packer`.
 Keep in mind that you can also set the `cloud-init` data via Terraform when you create a new VM from the template.
 
-This has been tested on Proxmox 9.1.2
+This has been tested on Proxmox 9.1.6
 
 ## Getting started
 
