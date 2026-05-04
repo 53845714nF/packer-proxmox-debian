@@ -28,7 +28,7 @@ variable "proxmox_iso_pool" {
 
 variable "debian_image" {
   type    = string
-  default = "debian-13.3.0-amd64-DVD-1.iso"
+  default = "debian-13.4.0-amd64-DVD-1.iso"
 }
 
 variable "vm_id" {
@@ -70,7 +70,7 @@ source "proxmox-iso" "debian" {
     }
 
     disks {
-        disk_size = "16G"
+        disk_size = "40G"
         format = "raw"
         storage_pool = "${var.proxmox_storage_pool}"
         type = "virtio"
