@@ -1,15 +1,17 @@
-# Debian Packer Builder for Proxmox
+<div align="center">
+    <h1>📋 Debian Template using Packer for Proxmox</h1>
+    <p>
+     This project provides Packer files to build a basic image of Debian 13 for use on a Proxmox system.
+     Use it as is or as a starting point for a more fully customized image. 
+     This project installs the base system and include salt-minion.
+     If you dont want to use salt-minion you can remove the `salt-minion` package from the `cloud-init` file.
+     Modify the `root` password in the `cloud-init`, the default password value is `packer`.
+     Keep in mind that you can also set the `cloud-init` data via Terraform when you create a new VM from the template.
+     This has been tested on Proxmox 9.1.9
+     </p>
+</div>
 
-This project provides Packer files to build a basic image of Debian 13 for use on a Proxmox system.
-Use it as is or as a starting point for a more fully customized image. 
-This project installs the base system and include salt-minion.
-If you dont want to use salt-minion you can remove the `salt-minion` package from the `cloud-init` file.
-Modify the `root` password in the `cloud-init`, the default password value is `packer`.
-Keep in mind that you can also set the `cloud-init` data via Terraform when you create a new VM from the template.
-
-This has been tested on Proxmox 9.1.9
-
-## Getting started
+## ⚙️ Setup
 
 To use this you will need:
 
@@ -22,7 +24,7 @@ To use this you will need:
 
 The simplest way to get the ISO file on your Proxmox system is to use the "Download from URL" option on the disk/share that you configured for ISO files.
 
-## Building an Image
+## 🔨 Building an Image
 
 Create a `variables.pkrvars.hcl` file and update the variables. For a full set of variables you can look at `example_variables.pkrvars.hcl` file.
 
@@ -33,7 +35,7 @@ Create a `variables.pkrvars.hcl` file and update the variables. For a full set o
 
 You can build the following templates by running `make`.
 
-## Variabel in this Template
+### Variabel in this Template
 
 * `proxmox_url` - A string in this Format: `https://0.0.0.0:8006/api2/json`
 * `username` - A string in this Format: `packer@pve!packer`
@@ -45,11 +47,11 @@ You can build the following templates by running `make`.
 > [!NOTE]  
 > When creating a Proxmox API Token, set Privilege Separation to No.
 
-## After the image is built
+## 👀 After the image is built
 
 Once the image is built you will want to adjust any remaining settings in the template including creating a cloud-init drive.
 A cloud-init drive _must_ be created for you to ssh into any new VMs you create. For details on how to do so visit [https://blog.dustinrue.com/proxmox-cloud-init/](https://blog.dustinrue.com/proxmox-cloud-init/).
 
-## Acknowledgement
+## 🤝 Acknowledgement
 
 Thanks to Dustin Rue how build similar for [CentOS/Rocky/Ubuntu](https://github.com/dustinrue/proxmox-packer).
